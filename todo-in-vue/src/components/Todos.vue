@@ -1,8 +1,10 @@
 <template>
   <div class="todos">
     <div class="holder container">
+      
       <form @submit.prevent="addTodo">
-        <input type="text" placeholder="Enter your todo to do..." v-model="todo">
+        <input type="text" placeholder="Enter your todo to do..." v-model="todo" v-validate="'min:5'" name="todo">
+        <p class="alert" v-if="errors.has('todo')">{{ errors.first('todo') }}</p>
       </form>
 
       <ul>
@@ -24,14 +26,18 @@ export default {
     return {
       todo: '',
       todos: [
-        
+
       ]
     }
   },
   methods: {
     addTodo() {
-      this.todos.push({ todo: this.todo })
-      this.todo = '';
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          this.todos.push({ todo: this.todo });
+          this.todo = '';
+        }
+      })
     }
   }
 }
@@ -76,6 +82,14 @@ export default {
     font-size: 1.3em;
     background-color: #333;
     color: orangered;
+  }
+
+  .alert {
+    background: rgb(231, 112, 33);
+    font-weight: bold;
+    display: inline-block;
+    padding: 5px;
+    margin-top: -20px;
   }
 
 </style>
