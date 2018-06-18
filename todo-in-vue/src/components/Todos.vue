@@ -1,12 +1,18 @@
 <template>
   <div class="todos">
     <div class="holder container">
+      <form @submit.prevent="addTodo">
+        <input type="text" placeholder="Enter your todo to do..." v-model="todo">
+      </form>
+
       <ul>
         <li v-for="(data, index) in todos" :key='index'>
           {{ data.todo }}
         </li>
       </ul>
+      
       <p>Your list of things to do.</p>
+    
     </div>
   </div>
 </template>
@@ -16,13 +22,16 @@ export default {
   name: "Todos",
   data() {
     return {
+      todo: '',
       todos: [
-        {"todo": "Fix docker file!"},
-        {"todo": "Get a job!"}
-      ],
-      bgColor: 'yellow',
-      bgWidth: '100%',
-      bgHeight: '30px'
+        
+      ]
+    }
+  },
+  methods: {
+    addTodo() {
+      this.todos.push({ todo: this.todo })
+      this.todo = '';
     }
   }
 }
@@ -58,6 +67,15 @@ export default {
 
   .container {
     box-shadow: 0px 3px 5px #777;
+  }
+
+  input {
+    width: calc(100% - 40px);
+    border: 0;
+    padding: 20px;
+    font-size: 1.3em;
+    background-color: #333;
+    color: orangered;
   }
 
 </style>
