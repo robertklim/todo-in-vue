@@ -15,6 +15,7 @@
         <transition-group name="list" enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutDown"> <!-- flipInX / flipOutX comes from external library -->
           <li v-for="(data, index) in todos" :key='index'>
             {{ data.todo }}
+            <i class="fa fa-minus-circle" v-on:click="remove(index)"></i>
           </li>
         </transition-group>
       </ul>
@@ -44,6 +45,9 @@ export default {
           this.todo = '';
         }
       })
+    },
+    remove(id) {
+      this.todos.splice(id, 1);
     }
   }
 }
@@ -54,6 +58,9 @@ export default {
 
   /* Import external animations */
   @import "https://cdn.jsdelivr.net/npm/animate.css@3.5.1";
+ 
+  /* Import font awsome */
+  @import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"; 
   
   .holder {
     background: #fff;
@@ -121,6 +128,11 @@ export default {
     100% {
       transform: scale(1);
     }
+  }
+
+  i {
+    float: right;
+    cursor: pointer;
   }
 
 </style>
